@@ -13,7 +13,7 @@
 <body>
     <header>
         <div class="header centered">
-            <img class="logo" src="..\icons\inverted\BookIt0.svg" alt="BookIt logo" id="header_logo" />
+            <a href="index.php" id="logo_link"><img class="logo" src="..\icons\inverted\BookIt0.svg" alt="BookIt logo" id="header_logo" /></a>
             <nav>
                 <ul id="navigation">
                     <li><a href="about_us.php">About us</a></li>

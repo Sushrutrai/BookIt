@@ -15,7 +15,7 @@
 
     <footer>
         <div class="centered footer">
-            <img class="logo" src="..\icons\inverted\BookIt0.svg" alt="BookIt logo" />
+            <img class="logo footer_logo" src="..\icons\inverted\BookIt0.svg" alt="BookIt logo" />
             <div id="helpful_links">
                 <h3>Help</h3>
                 <ul class="footer_links">

@@ -28,6 +28,11 @@ a{
 }
 .logo{
     height: auto;
+    width: 100%;
+    display: block;
+}
+#logo_link{
+    display: inline-block;
     width: min(12rem,26%);
 }
 .icon{
@@ -122,6 +127,10 @@ main{
     bottom:0;   
     border-bottom:2px solid white;
    padding: 1.8rem 0;
+}
+.footer_logo{
+    width: min(12rem,26%);
+    height: auto;
 }
 .footer_links{
     display: flex;

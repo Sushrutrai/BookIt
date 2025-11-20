@@ -22,6 +22,12 @@
             </div>
         </section>
         <section class="centered main_content">
+            <div class="Event_card">
+                <div><img src="event_card\Shailu_rai.png" alt=""></div>
+                <div>
+                    <h3>Indie Gateaway Ft.Shailu Rai, The Alley & Ketchup</h3>
+                </div>
+            </div>
         </section>
         <div></div>
     </main>
