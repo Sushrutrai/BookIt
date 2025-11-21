@@ -17,19 +17,16 @@
         <section class="hero" id="hero">
             <div class="overlay" id="left"></div>
             <div class="overlay" id="right"></div>
-            <div class="hero_section" id="content">
-                <!-- <h1 class="bigger_text">Ready <span class="smaller_text">For An Exciting </span>Weekend?</h1>  -->
-            </div>
         </section>
-        <section class="centered main_content">
+        <!-- <section class="centered main_content">
             <div class="Event_card">
                 <div><img src="event_card\Shailu_rai.png" alt=""></div>
                 <div>
                     <h3>Indie Gateaway Ft.Shailu Rai, The Alley & Ketchup</h3>
                 </div>
             </div>
-        </section>
-        <div></div>
+        </section> 
+        <div></div>-->
     </main>
     <?php include "footer.php"; ?>
     <script src="..\js\home_interactivity.js"></script>

@@ -63,7 +63,7 @@ main{
     height: auto;
     aspect-ratio: 7/2;
     height: fit-content;
-    background-image:linear-gradient(180deg,rgba(0,0,0,0.7)100%, rgba(255,255,255,.2)), url('../Images/Hero_Image_Temp3.jpg');
+    /* background-image:linear-gradient(180deg,rgba(0,0,0,0.7)100%, rgba(255,255,255,.2)), url('../Images/Albatross.jpg'); */
     transition: background 0.5s ease-in-out;
     display: flex;
     background-position: 40% 40%;
