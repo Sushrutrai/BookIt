@@ -1,15 +1,28 @@
-const hero=document.getElementById('hero');
-const content=document.getElementById('content');
+const hero = document.getElementById('hero');
 
-console.log("Js is active");
+// Array of images
+const images = [
+     "../Images/nepathya.jpg",
+    "../Images/theedgeband.jpg",
+    "../Images/monkeyTemple.jpg",
+    "../Images/sabinrai.jpg",
+    "../Images/rockhead.jpg",
+    "../Images/Albatross.jpg"
+];
 
-document.getElementById('left').addEventListener("click", () => {
-    hero.style.backgroundImage = 'url("../Images/Hero_Image_Temp4.jpg")';
-    //content.innerHTML='<h1 class="bigger_text">This is albatross!</h1>'
-    
-});
+let index = 0;
+
+// Set initial background
+hero.style.backgroundImage = `url("${images[index]}")`;
+
+// RIGHT BUTTON – Next image
 document.getElementById('right').addEventListener("click", () => {
-    hero.style.backgroundImage = 'url("../Images/Hero_Image_Temp2.jpg")';
-    //content.innerHTML='<h1 class="bigger_text">This is Nepathya!</h1>'
-   
+    index = (index + 1) % images.length; // loops back to first image
+    hero.style.backgroundImage = `url("${images[index]}")`;
+});
+
+// LEFT BUTTON – Previous image
+document.getElementById('left').addEventListener("click", () => {
+    index = (index - 1 + images.length) % images.length; // loops back to last image
+    hero.style.backgroundImage = `url("${images[index]}")`;
 });
