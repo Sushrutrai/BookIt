@@ -15,7 +15,10 @@
 <body>
     <?php include "header.php"; ?> 
     <main>
+        
         <section class="hero" id="hero">
+            <div id="eventDetails"></div>
+
             <div class="overlay" id="left"></div>
             <div class="overlay" id="right"></div>
         </section>

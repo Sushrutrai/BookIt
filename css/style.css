@@ -70,6 +70,18 @@ main{
     position: relative;
     background-size: cover;
 }
+
+#eventDetails {
+    position: absolute;
+    bottom: 30px;
+    left: 40px;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 2px 2px 6px black;
+    z-index: 5;
+}
+
 .hero_section{
     width: 100%;
     aspect-ratio: 7/2;  
