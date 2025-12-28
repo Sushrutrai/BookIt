@@ -26,7 +26,7 @@ function isActiveFrom($formName,$activeForm){
   </head>
   <body>
    <div id="login-form" class="form-box <?=isActiveFrom('login',$activeForm)?>">
-    <form method="post" action="../backend/login_register.php" class="centered">
+    <form method="post" action="../backend/login_register.php" class="centered" >
       <h1>Log In</h1>
         <?=showError($errors['login']);?>
         <fieldset>

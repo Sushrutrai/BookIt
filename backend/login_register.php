@@ -31,7 +31,7 @@ if(isset($_POST['login'])){
             $_SESSION['role']=$user['role'];
 
             if($user['role']==='admin'){
-                header("Location:../admin/adminPanel.php");
+                header("Location:../admin/src/adminPanel.php");
             }else{
                 header("Location:../src/index.php");
             }
