@@ -1,0 +1,249 @@
+html body {
+  font-family: "Tahoma", sans-serif;
+  /* outline: 1px solid red;  */
+  height: auto;
+  margin: auto;
+  background-color: white;
+  font-size: 16px;
+  color: white;
+}
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: black;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+footer {
+  background-color: black;
+  width: 100%;
+}
+a {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+}
+header a {
+  color: white;
+}
+footer a {
+  color: white;
+}
+.centered {
+  max-width: 68vw;
+  margin: auto;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  /* <!-- padding: min(1.8rem, 5%); --> */
+     width:100%;
+    align-items: center;
+}
+.logo {
+  height: auto;
+  width: 100%;
+  display: block;
+    padding:1.2rem 0 ;
+}
+#logo_link {
+  display: inline-block;
+  width: min(12rem, 26%);
+}
+.icon {
+  height: auto;
+  width: 16px;
+  margin: 0;
+  vertical-align: middle;
+}
+.navigation {
+  display: flex;
+  list-style: none;
+  column-gap: 30px;
+}
+.navigation li {
+  display: flex;
+  align-content: center;
+}
+.navigation li a {
+  text-decoration: none;
+  color: white;
+}
+main {
+  height: fit-content;
+  width: 100%;
+}
+.hero {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 7/2;
+  height: fit-content;
+  background-image: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.7) 100%,
+    rgba(255, 255, 255, 0.2)
+  );
+  transition: background 0.5s ease-in-out;
+  display: flex;
+  background-position: 40% 40%;
+  position: relative;
+  background-size: cover;
+}
+.hero_section {
+  width: 100%;
+  aspect-ratio: 7/2;
+  font-family: "Bebas Neue", sans-serif;
+  color: black;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  transition: opacity 0.3s ease-in-out;
+}
+.hero h1 {
+  padding: 3rem 0 0 0;
+  max-width: 68vw;
+  margin: auto;
+}
+.bigger_text {
+  font-size: 8rem;
+}
+.smaller_text {
+  font-size: 6rem;
+  margin: 0;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  width: 30%;
+  height: 100%;
+  cursor: pointer;
+  z-index: 4;
+}
+#left {
+  left: 0;
+}
+#right {
+  right: 0;
+}
+.centered h2 {
+  margin: auto;
+  padding: min(1.8rem, 5vw);
+}
+.main_content {
+  height: fit-content;
+  background-color: white;
+  color: black;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  bottom: 0;
+  border-bottom: 2px solid white;
+  padding: 1.8rem 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08), 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+.footer_logo {
+  width: min(12rem, 26%);
+  height: auto;
+}
+.footer_links {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  row-gap: 10px;
+}
+.footer ul {
+  list-style: none;
+  padding: 0;
+  color: white;
+}
+.footer_links li {
+  display: flex;
+  justify-content: baseline;
+  gap: 1.2rem;
+  margin: 0;
+}
+.footer_links {
+  margin: auto 0.8rem;
+}
+#footer_bottom {
+  padding: 1.8rem;
+}
+#social,
+p {
+  list-style: none;
+  display: flex;
+  gap: 2.2rem;
+  justify-content: center;
+  padding: 0.4rem 0;
+}
+div > h3 {
+  margin: 0.6rem 0.8rem;
+  color: white;
+}
+.svg {
+    display: none;
+    position: relative;
+}
+@media (max-width: 660px) {
+  .hero {
+    aspect-ratio: 16/9;
+  }
+  .footer {
+    transition: all 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+  }
+  footer div{
+    margin: 0.8rem 0;
+  }
+  
+  body {
+    font-size: 14px;
+  }
+  .centered {
+    max-width: 90vw;
+  }
+  header{
+    padding:0 2rem;
+  }
+}
+@media (max-width: 768px) and (min-width: 661px) {
+  .hero {
+    aspect-ratio: 5/2;
+  }
+}
+@media(max-width:1100px){
+    .navigation{
+    position: fixed; 
+     top: -100px;
+    }
+    .navigation.active{
+        display: flex;
+        flex-direction: column;
+        justify-content:  center;
+        text-align: center;
+        min-width: 100%;
+        background-color: black;
+        top: 0;
+        height: 100vh;
+        width: 100%;
+        position: fixed;
+        transition: .15s  ease-in-out;
+    }
+  
+    .navigation li {
+      padding: 1rem 0;
+      font-size: 1.2rem;
+      margin: 0;
+      margin-bottom: 2rem;
+      text-align: center;
+      border-bottom: 1px solid white;
+    }
+    header div .svg{
+        display: block;
+    }
+}
