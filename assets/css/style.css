@@ -124,10 +124,10 @@ main {
 #right {
   right: 0;
 }
-.centered h2 {
+/* .centered h2 {
   margin: auto;
   padding: min(1.8rem, 5vw);
-}
+} */
 .main_content {
   height: fit-content;
   background-color: white;
@@ -169,8 +169,7 @@ main {
 #footer_bottom {
   padding: 1.8rem;
 }
-#social,
-p {
+#social,#footer_bottom p {
   list-style: none;
   display: flex;
   gap: 2.2rem;
