@@ -32,16 +32,16 @@
                 </article>
                -->  
                 <?php
-                    require __DIR__.'/../app/config/config.php';
+                    require __DIR__.'/../app/bootstrap.php';
 
                     $statement=$connection->prepare('select * from event_details order by event_date desc;');
                     $statement->execute();
                     $result=$statement->get_result();
 
                     while($row=$result->fetch_assoc()){
-                        echo "<article class='grid-item aspect'>
+                        echo "<article class='grid-item aspect' >
                             <img class='banner_img' src='../uploads/".$row["event_image_path"]."' alt='".htmlspecialchars($row["event_name"])."'>
-                            <h3>".htmlspecialchars($row['event_name'])."</h3>
+                            <h3 onclick=\"location.href='event_card.php?eid=".$row['eid']."'\">".htmlspecialchars($row['event_name'])."</h3>
                     <ul>
                         <li><img class='icon' src='../assets/icons/calender.svg' > ".date('d M ,Y', strtotime($row['event_date'])) ."</li>
                         <li><img class='icon' src='../assets/icons/time.svg' >".htmlspecialchars($row["event_location"])."</li>
