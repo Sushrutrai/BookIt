@@ -19,6 +19,8 @@
                 <ul class="navigation">
                     <?php
                     session_start();
+                    $_SESSION['role']='admin';
+                    $_SESSION['name']='admin';
                     if (isset($_SESSION['role']) && $_SESSION['role']==='admin') {
                         echo "<li><a href=\"../admin/adminPanel.php\">Admin Dash</a></li>";
                     }

@@ -1,5 +1,7 @@
 <?php
 session_start();
+    $_SESSION['role']='admin';
+    $_SESSION['name']='admin';
     if(isset($_SESSION['role']) && $_SESSION['role']!=='admin'){
         header("Location:..\public\index.php");
         exit();
