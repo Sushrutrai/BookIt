@@ -41,12 +41,14 @@
                     while($row=$result->fetch_assoc()){
                         echo "<article class='grid-item aspect' >
                             <img class='banner_img' src='../uploads/".$row["event_image_path"]."' alt='".htmlspecialchars($row["event_name"])."'>
-                            <h3 onclick=\"location.href='event_card.php?eid=".$row['eid']."'\">".htmlspecialchars($row['event_name'])."</h3>
+                            <h3 onclick=\"location.href='event_card.php?eid=".$row['eid']."'\">".htmlspecialchars($row['event_name'])."</h3>             
+                            
                     <ul>
                         <li><img class='icon' src='../assets/icons/calender.svg' > ".date('d M ,Y', strtotime($row['event_date'])) ."</li>
                         <li><img class='icon' src='../assets/icons/time.svg' >".htmlspecialchars($row["event_location"])."</li>
                     </ul>
                     <button type='button' onclick=\"return alert('ticket purchased')\">Buy Ticket</button>
+      
                 </article>
                         ";
                     }

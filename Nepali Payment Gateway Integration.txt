@@ -1,0 +1,62 @@
+### **Nepali Payment Gateway Integration with PHP & JS**
+
+For your college project, you can integrate **Nepali payment gateways** like **eSewa, Khalti, IME Pay, ConnectIPS, or Fonepay** using PHP and JavaScript.  These are widely used in Nepal and support local payment methods.
+
+### 1. **Popular Nepali Payment Gateways**
+- **eSewa**: Most popular, user-friendly, supports wallet and bank payments. 
+- **Khalti**: Developer-friendly API, supports QR, cards, and eBanking. 
+- **Fonepay**: Interoperable network used by many banks; supports QR and web payments. 
+- **ConnectIPS**: Direct bank-to-bank transfer via NCHL.
+- **IME Pay**: Strong in remittance and rural reach.
+
+
+
+### 2. **Use a PHP Package**
+Install a ready-made library:
+```bash
+composer require kbk/nepali-payment-gateway
+```
+This package supports **eSewa, Khalti, and ConnectIPS** with unified PHP interfaces. 
+
+Example (eSewa):
+```php
+use Kbk\NepaliPaymentGateway\Epay\Esewa;
+
+$esewa = new Esewa([
+    'product_code' => 'EPAYTEST',
+    'secret_key'   => '8gBm/:&EnhH.1/q' // Test key
+]);
+
+$response = $esewa->payment([
+    'amount'        => 1000,
+    'success_url'   => 'success.php',
+    'failure_url'   => 'failure.php'
+]);
+
+header('Location: ' . $response->redirect());
+```
+
+### 3. **Frontend with JavaScript**
+Use plain JS or redirect-based flow (most gateways don’t support client-side card input for security). 
+
+```html
+<form action="initiate_payment.php" method="POST">
+  <input type="number" name="amount" placeholder="Amount in NPR" required />
+  <button type="submit">Pay with Khalti/eSewa</button>
+</form>
+```
+
+### 4. **Go Live Steps**
+- Register as a merchant on [eSewa Business](https://business.esewa.com.np) or [Khalti Business](https://merchants.khalti.com).
+- Get **merchant ID, secret key, and public key**. 
+- Replace test credentials with live ones.
+- Test using sandbox mode.
+
+### 5. **Alternative: API Nepal (Aggregator)**
+Use **[API Nepal](https://apinepal.com)** to support **multiple gateways** (eSewa, Khalti, Fonepay) with one integration. 
+
+Provides:
+- Unified API
+- JS SDK for popup checkout
+- IPN (Instant Payment Notification) support
+

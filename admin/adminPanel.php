@@ -125,7 +125,7 @@ $total_events=$connection->query('select count(*) as total_events from event_det
             </div>
             <div class="action-button"></div>
             <?php
-            $statement=$connection->prepare('select * from event_details e inner join event_categories c on e.category_id=c.category_id;');
+            $statement=$connection->prepare('select * from event_details e inner join event_categories c on e.category_id=c.category_id order by entered_at desc limit 3;');
             $statement->execute();
             echo'<table>
                 <tbody>';
