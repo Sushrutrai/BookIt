@@ -68,6 +68,23 @@ main{
     margin: 0;
     align-self: start;
 }
+.event_right .flex_content .favourite svg{
+    padding: .2rem;
+    margin-right: 0;
+    transition: fill 0.3s ease;
+}
+.event_right .flex_content .favourite.is_active svg{
+    fill: black;
+}
+.favourite{
+    background: none;
+    border: none;
+    margin-left:auto;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .date_location_container{
     display: flex;
     flex-direction: row;

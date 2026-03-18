@@ -40,7 +40,7 @@ include'partial/adminheader.php';?>
             <input id="event-description" name="event_description" placeholder="Describe the event in detail">
         </label>
         <label for="event-location">Event Location<input type="text" id="event-location" name="event_location" placeholder="Enter event location"></label>
-        <label for="maps-link">Maps Link<input type="text" id="maps-link" name="maps_link" placeholder="https://maps.google.com/"></label>
+        <label for="maps-link">Maps embed Link<input type="text" id="maps-link" name="maps_link" placeholder="https://maps.google.com/"></label>
         <label for="event_image">Event Image<input type="file" id="event-image" name="event_image"></label>
 
         <div class="buttons">

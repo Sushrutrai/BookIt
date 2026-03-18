@@ -21,16 +21,6 @@
         </section>
          <section class="centered main_content">
             <div class="grid">
-                <!-- <article class="grid-item aspect">  
-                    <img class="banner_img"src="../uploads/event_card/ab67616d0000b273254442c08e03a0be65dee761.jpg" alt="Indie Gateaway Event">
-                    <h3>Indie Gateaway Ft.Shailu Rai, The Alley & Ketchup</h3>
-                    <ul>
-                        <li><img class="icon" src="../assets/icons/calender.svg" alt="">Fri, 05 Dec</li>
-                        <li><img class="icon" src="../assets/icons/time.svg" alt="">Reggae Bar Thamel</li>
-                    </ul>
-                    <button type=""onclick="return alert('ticket puchased')">Buy Ticket</button>
-                </article>
-               -->  
                 <?php
                     require __DIR__.'/../app/bootstrap.php';
 

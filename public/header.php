@@ -20,16 +20,16 @@
                     <?php
                     session_start();  
                     
-                    $_SESSION['role']='admin';          //This is just temporary for testing admin functionality
-                    $_SESSION['name']='admin';          //This is just temporary for testing admin functionality
-                    
+                    // $_SESSION['role']='admin';          //This is just temporary for testing admin functionality
+                    // $_SESSION['name']='admin';          //This is just temporary for testing admin functionality
+                    // $_SESSION['id']=0;
                     if (isset($_SESSION['role']) && $_SESSION['role']==='admin') {
                         echo "<li><a href=\"../admin/adminPanel.php\">Admin Dash</a></li>";
                     }
                     ?>
                     <li><a href="about_us.php">About us</a></li>
                     <li><a href="">Explore</a></li>
-                    <li><a href="">My Events</a></li>
+                    <li><a href="myEvents.php">My Events</a></li>
                     <?php
 
                     if (empty($_SESSION['name'])) {

@@ -37,7 +37,23 @@
                     <img src='../uploads/<?php echo $row['event_image_path'];?>' alt=''>
                 </div>
                 <div class="event_right">
-                    <h2><?php echo $row['event_name'];?></h2>
+                    <div class="flex_content">
+                        <h2><?php echo $row['event_name'];?></h2>
+                        <?php
+                            $query=$connection->prepare("SELECT 1 FROM bookmarks WHERE eid=? && id=?;");
+                            $query->bind_param('ii',$row['eid'],$_SESSION['id']);
+                            $query->execute();
+                            $result=$query->get_result();
+
+                            $activeClass= ($result->num_rows>0)?'is_active':'';
+
+                        ?>
+                        <button class="favourite <?php echo $activeClass;?>">
+                            <svg id='svg' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z" stroke="black" stroke-width="1.5"/>
+                        </svg>
+                        </button>
+                    </div>
                     <div class="date_location_container">
                         <div class="date">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -84,7 +100,43 @@
                 <iframe src="<?php echo htmlspecialchars($row['event_maps_link'])?>" frameborder="2"></iframe>
            </div>
     </main>
+  
     <?php include 'footer.php';?>
 </body>
+  <script>
+    const favourite=document.querySelector('.favourite');
+    favourite.addEventListener('click',async function(){
 
+        const isActive=this.classList.toggle('is_active');
+        const userID=<?php echo $_SESSION['id']; ?>;
+        const eid=<?php echo $row['eid'];?>;
+        
+        try{
+            const response=await fetch('../app/actions/bookmarks.php',{
+                method:'POST',
+                headers:{
+                    'Content-Type':'application/json'
+                },
+                body:JSON.stringify({
+                    id:userID,
+                    eid:eid,
+                    liked:isActive
+                })
+            });
+
+            const result=await response.json();
+
+            if(result && result.success){
+                alert(isActive?'Added to favourite':'Removed from favourite');
+            }
+            else{
+                this.classList.toggle('is_active');
+                alert('ERROR '+(result.message||'database error'));
+            }
+        }catch(error){
+            this.classList.toggle('is_active');
+            console.error('Network error',error)
+        }
+    })  
+    </script>
 </html>
