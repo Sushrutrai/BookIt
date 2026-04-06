@@ -8,8 +8,6 @@ if (!isset($_SESSION['role'])) {
     echo json_encode(['success' => false, 'message' => 'Unauthorized: Please log in to bookmark events']);
     exit;
 }
-<<<<<<< HEAD
-=======
 
 $json = file_get_contents('php://input');
 $data = json_decode($json, true);
@@ -42,5 +40,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
->>>>>>> copilot/worktree-2026-04-06T14-04-23
 ?>
