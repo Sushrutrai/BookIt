@@ -95,3 +95,89 @@ form label:first-of-type{
     background-color: #4CAF50;
     color: white;
 }
+
+/* Ticket Tier Styling */
+.ticket-tier {
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 0.6rem;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.ticket-tier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.ticket-tier-header h3 {
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.btn-remove-ticket {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.btn-remove-ticket:hover {
+    background-color: #c82333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-add-ticket {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 1rem;
+    transition: background-color 0.2s;
+}
+
+.btn-add-ticket:hover {
+    background-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-tier label {
+    display: block;
+    margin: 1rem 0 0 0;
+}
+
+.ticket-tier label input {
+    width: 100%;
+    box-sizing: border-box;
+    border-radius: 0.2rem;
+    border: 1px solid #ccc;
+    padding: 0.8rem;
+    font-size: 14px;
+    margin-top: 0.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.ticket-tier label input:focus {
+    outline: none;
+    border-color: #007BFF;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+}
+
+#ticket-tiers-container {
+    margin: 1.5rem 0;
+}

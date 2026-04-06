@@ -45,12 +45,15 @@ include'partial/adminheader.php';?>
         <label for="maps-link">Maps embed Link<input type="text" id="maps-link" name="maps_link" placeholder="https://maps.google.com/"></label>
         <label for="event_image">Event Image<input type="file" id="event-image" name="event_image"></label>
         </div>
-         <div>
-                <h2>Ticket Tiers</h2>
-                <div>
-
-                </div>
-                <div></div>
+        <div>
+            <h2>Ticket Tiers</h2>
+            <p style="color: #666; font-size: 14px; margin-bottom: 1.5rem;">Add ticket types for your event. Set custom names, prices, and quantities for each tier.</p>
+            
+            <div id="ticket-tiers-container">
+                <!-- Ticket tiers will be added here dynamically -->
+            </div>
+            
+            <button type="button" id="add-ticket-btn" class="btn btn-add-ticket" onclick="addTicketTier()">+ Add Ticket Tier</button>
         </div>
         <div class="buttons">
             <button type="submit" class="btn btn-primary" name="add" value="add">Publish Event</button>
