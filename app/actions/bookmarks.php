@@ -17,13 +17,17 @@ $eid = $data['eid'];
 $status = $data['liked'];
 
 // Role-based access control
-if ($_SESSION['role'] === 'user' && $_SESSION['id'] != $id) {
+if ($_SESSION['role'] === 'admin') {
+    // Admins cannot bookmark
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'Admins are not allowed to bookmark events']);
+    exit;
+} elseif ($_SESSION['role'] === 'user' && $_SESSION['id'] != $id) {
     // Users can only manage their own bookmarks
     http_response_code(403);
     echo json_encode(['success' => false, 'message' => 'Forbidden: You can only manage your own bookmarks']);
     exit;
 }
-// Admins can manage any bookmarks
 
 try {
     if ($status === false) {

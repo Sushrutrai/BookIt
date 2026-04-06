@@ -44,8 +44,20 @@
 
                     while($row=$result->fetch_assoc()){
                         $activeClass = in_array($row['eid'], $bookmarkedEvents) ? 'is_active' : '';
-                        $disabledAttr = (isset($_SESSION['role']) && isset($_SESSION['id'])) ? '' : 'disabled';
-                        $titleAttr = $disabledAttr ? 'title="Please log in to bookmark events"' : '';
+                        
+                        $isDisabled = false;
+                        $disableReason = '';
+                        
+                        if (!isset($_SESSION['role'])) {
+                            $isDisabled = true;
+                            $disableReason = 'Please log in to bookmark events';
+                        } elseif ($_SESSION['role'] === 'admin') {
+                            $isDisabled = true;
+                            $disableReason = 'Admins cannot bookmark events';
+                        }
+                        
+                        $disabledAttr = $isDisabled ? 'disabled' : '';
+                        $titleAttr = $isDisabled ? 'title="' . $disableReason . '"' : '';
 
                         echo "<article class='grid-item ' >
                             <div class='banner_img_container banner_img'>
@@ -76,9 +88,10 @@
     const favouriteButtons = document.querySelectorAll('.favourite');
     favouriteButtons.forEach(function(favourite, idx) {
         favourite.addEventListener('click', async function() {
-            // Check if button is disabled (user not logged in)
+            // Check if button is disabled (user not logged in or admin)
             if (this.hasAttribute('disabled')) {
-                alert('Please log in to bookmark events');
+                const title = this.getAttribute('title');
+                alert(title || 'This action is not available');
                 return;
             }
 
