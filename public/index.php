@@ -33,7 +33,11 @@
                     $bookmarkedEvents = [];
                     if ($userId) {
                         $bookmarkStmt = $connection->prepare("SELECT eid FROM bookmarks WHERE id=?");
+<<<<<<< HEAD
                           $bookmarkStmt->bind_param('i', $userId);
+=======
+                        $bookmarkStmt->bind_param('i', $userId);
+>>>>>>> copilot/worktree-2026-04-06T14-04-23
                         $bookmarkStmt->execute();
                         $bookmarkRes = $bookmarkStmt->get_result();
                         while ($bookmarkRow = $bookmarkRes->fetch_assoc()) {
@@ -44,12 +48,21 @@
 
                     while($row=$result->fetch_assoc()){
                         $activeClass = in_array($row['eid'], $bookmarkedEvents) ? 'is_active' : '';
+<<<<<<< HEAD
 
+=======
+                        $disabledAttr = (isset($_SESSION['role']) && isset($_SESSION['id'])) ? '' : 'disabled';
+                        $titleAttr = $disabledAttr ? 'title="Please log in to bookmark events"' : '';
+>>>>>>> copilot/worktree-2026-04-06T14-04-23
 
                         echo "<article class='grid-item ' >
                             <div class='banner_img_container banner_img'>
                             <img  src='../uploads/".$row["event_image_path"]."' alt='".htmlspecialchars($row["event_name"])."'> 
+<<<<<<< HEAD
                             <button class='favourite ".$activeClass."'>
+=======
+                            <button class='favourite ".$activeClass."' ".$disabledAttr." ".$titleAttr.">
+>>>>>>> copilot/worktree-2026-04-06T14-04-23
                             <svg  width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
                             <path d='M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z' stroke='black' stroke-width='1'/>
                         </svg>
@@ -75,6 +88,11 @@
     const favouriteButtons = document.querySelectorAll('.favourite');
     favouriteButtons.forEach(function(favourite, idx) {
         favourite.addEventListener('click', async function() {
+            // Check if button is disabled (user not logged in)
+            if (this.hasAttribute('disabled')) {
+                alert('Please log in to bookmark events');
+                return;
+            }
 
             const isActive = this.classList.toggle('is_active');
             const userID = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 0; ?>;
