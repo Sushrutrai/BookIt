@@ -27,13 +27,13 @@
                         echo "<li><a href=\"../admin/adminPanel.php\">Admin Dash</a></li>";
                     }
                     ?>
-                    <li><a href="about_us.php">About us</a></li>
+                    <!-- <li><a href="about_us.php">About us</a></li> -->
                     <li><a href="">Explore</a></li>
                     <li><a href="myEvents.php">My Events</a></li>
                     <?php
 
                     if (empty($_SESSION['name'])) {
-                        echo "<li><a href=\"Form.php\">Sign up</a></li>";
+                        echo "<li><a href=\"Form.php\">Login</a></li>";
                     } else {
                         echo "<li><a href=\"../app/auth/logout.php\" onclick=\"return confirm('Are you sure you want to log out?')\">Log out</a></li>";
                     }

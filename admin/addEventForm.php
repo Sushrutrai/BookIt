@@ -19,7 +19,9 @@ include'partial/adminheader.php';?>
     <p>Fill the fields to create event</p>
     </div>
     <form method="post" action="../../app/actions/controller.php" enctype="multipart/form-data">
-        <label for="event-name">Event Name<input type="text" id="event-name" name="event_name" placeholder="Enter name of the event"></label>
+        <div>
+            <h2>Event Details</h2>
+            <label for="event-name">Event Name<input type="text" id="event-name" name="event_name" placeholder="Enter name of the event"></label>
         <label for="event-date" >Date<input type="date" id="event-date" name="event_date"></label>
         <label for="event-date">Category
             <select name="event_category" id="event_category">
@@ -42,11 +44,19 @@ include'partial/adminheader.php';?>
         <label for="event-location">Event Location<input type="text" id="event-location" name="event_location" placeholder="Enter event location"></label>
         <label for="maps-link">Maps embed Link<input type="text" id="maps-link" name="maps_link" placeholder="https://maps.google.com/"></label>
         <label for="event_image">Event Image<input type="file" id="event-image" name="event_image"></label>
+        </div>
+         <div>
+                <h2>Ticket Tiers</h2>
+                <div>
 
+                </div>
+                <div></div>
+        </div>
         <div class="buttons">
-            <button type="submit" class="btn btn-primary" name="add" value="add">Submit</button>
+            <button type="submit" class="btn btn-primary" name="add" value="add">Publish Event</button>
             <button type="reset" class="btn btn-secondary">Reset</button>
         </div>
+       
     </form>
     <?php include 'partial/adminFooter.php';?>
 </body>

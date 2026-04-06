@@ -6,9 +6,10 @@
     <title>My Bookmarked Events | BookIt</title>
     <link rel="stylesheet" href="../assets/css/style.css">
      <link rel="stylesheet" href="../assets/css/grids.css">
+     <link rel="stylesheet" href="../assets/css/myEvents.css">
 </head>
 <body>
-   <main>
+  
      <?php include "header.php"; ?>
     <?php
     require __DIR__.'/../app/bootstrap.php';
@@ -17,7 +18,9 @@
     }
     else{
     ?>
+     <main>
      <section class="centered main_content">
+        <h1>MY EVENTS</h1>
             <div class="grid">
     <?php
     
@@ -34,7 +37,7 @@
                 <li><img class='icon' src='../assets/icons/calender.svg' > ".date('d M ,Y', strtotime($row['event_date'])) ."</li>
                 <li><img class='icon' src='../assets/icons/time.svg' >".htmlspecialchars($row["event_location"])."</li>
             </ul>
-            <button type='button' onclick=\"return alert('ticket purchased')\">Buy Ticket</button>
+            <button class='buy_button' type='button' onclick=\"return alert('ticket purchased')\">Buy Ticket</button>
 
         </article>";
         }

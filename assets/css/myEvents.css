@@ -1,0 +1,4 @@
+.grid::after{
+    content: '';
+    width: auto;
+}

@@ -73,17 +73,21 @@ main{
     margin-right: 0;
     transition: fill 0.3s ease;
 }
-.event_right .flex_content .favourite.is_active svg{
-    fill: black;
+.favourite.is_active svg{
+    fill: red;
+}
+.favourite.is_active svg path{
+    stroke:red;
 }
 .favourite{
-    background: none;
+    background: rgba(255, 255, 255, .4);
     border: none;
+    border-radius: 50%;
     margin-left:auto;
-    padding: 0;
-    display: flex;
+    padding: 2.5px;
+    /* display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
 }
 .date_location_container{
     display: flex;
