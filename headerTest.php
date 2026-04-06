@@ -1,7 +1,6 @@
-use PHPUnit\Framework\TestCase;
-
 <?php
 // Tests for header.php navigation and session handling
+use PHPUnit\Framework\TestCase;
 
 
 class HeaderTest extends TestCase

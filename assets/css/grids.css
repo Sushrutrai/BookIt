@@ -1,6 +1,6 @@
 :root{
-    --gap:1.5rem;
-    --min_col:360px;
+    --gap:2rem;
+    --min_col:300px;
 }
 
 .grid{
@@ -8,7 +8,7 @@
     gap: var(--gap);
     grid-template-columns: repeat(auto-fit,minmax(var(--min_col),1fr));
     margin: 0;
-    padding:1.5rem;
+    padding:1.5rem 0;
     align-items: stretch;
 }
 .grid-item{
@@ -22,15 +22,7 @@
     0 2px 8px rgba(0,0,0,0.10);
     justify-content: space-evenly;
 }
-/* .grid-item.aspect{
-    aspect-ratio: 1/1;
-} */
-.grid-item .banner_img{
-    aspect-ratio: 1/1;
-    border: black solid .1rem ;
-    border-radius: .5rem;
-    max-width: 500px;
-}
+
 @media (max-width:660px){
     :root{
         --min_col:180px;
@@ -56,7 +48,7 @@
     width: auto;
     align-self: flex-start;
 }
-.grid-item button{
+.grid-item .buy_button{
     padding: .4rem;
     border-radius: .5rem;
     margin-top: 1rem;
@@ -65,4 +57,54 @@
     color: #ffffff;
     box-shadow: inset;
     font-weight: bolder;
+}
+.event_right .flex_content .favourite svg{
+    padding: .2rem;
+    margin-right: 0;
+    transition: fill 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.event_right .flex_content .favourite.is_active svg{
+    fill: black;
+}
+.favourite{
+    background: rgba(255, 255, 255, .4);
+    box-shadow: #ffffff;
+    border: none;
+    border-radius: 50%;
+    margin-left:auto;
+    padding: 2.5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    top: 15px;
+    right: 15px;
+}
+.grid-item .banner_img{
+    aspect-ratio: 1/1;
+    border: black solid .1rem ;
+    border-radius: .5rem;
+    max-width: 500px;
+   
+}
+.banner_img_container{
+    position: relative;
+    overflow:hidden;
+    width: 100%;
+
+}
+.banner_img_container.banner_img img{
+    aspect-ratio: 1/1;
+    width: 100%;
+    box-sizing: border-box;
+}
+.favourite.is_active svg {
+    fill: red;
+    
+}
+.favourite.is_active svg path{
+    stroke: red;
 }

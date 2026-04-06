@@ -5,7 +5,7 @@ $errors=[
   'login'=>$_SESSION['login_error'] ??'',
   'register'=>$_SESSION['register_error']??''
 ];
-$activeForm=$_SESSION['active_form']??'register';
+$activeForm=$_SESSION['active_form']??'login';
 
 session_unset();
 
