@@ -1,15 +1,12 @@
--- BookIt Database Schema (MariaDB)
--- Generated from local XAMPP/MariaDB 'show create table'
-
 CREATE TABLE `users` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) NOT NULL,
+  `usename` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('user','admin') DEFAULT 'user',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `name` (`name`),
   UNIQUE KEY `email` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -84,27 +81,14 @@ CREATE TABLE `tickets` (
   `booking_id` int(10) unsigned NOT NULL,
   `ticket_type_id` int(10) NOT NULL,
   `ticket_hash` varchar(255) NOT NULL,
-  `is_scanned` tinyint(1) DEFAULT 0,
-  `scanned_at` datetime DEFAULT NULL,
+  -- `is_scanned` tinyint(1) DEFAULT 0,
+  -- `scanned_at` datetime DEFAULT NULL,
   PRIMARY KEY (`ticket_instance_id`),
   UNIQUE KEY `ticket_hash` (`ticket_hash`),
   KEY `fk_ticket_booking` (`booking_id`),
   KEY `fk_ticket_type` (`ticket_type_id`),
   CONSTRAINT `fk_ticket_booking` FOREIGN KEY (`booking_id`) REFERENCES `bookings` (`booking_id`) ON DELETE CASCADE,
   CONSTRAINT `fk_ticket_type` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`ticket_id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-CREATE TABLE `cart` (
-  `cart_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL,
-  `ticket_type_id` int(11) NOT NULL,
-  `quantity` int(5) DEFAULT 1,
-  `added_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`cart_id`),
-  KEY `fk_cart_user` (`user_id`),
-  KEY `fk_cart_ticket` (`ticket_type_id`),
-  CONSTRAINT `fk_cart_ticket` FOREIGN KEY (`ticket_type_id`) REFERENCES `ticket_type` (`ticket_id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_cart_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `bookmarks` (

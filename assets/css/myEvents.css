@@ -1,5 +1,78 @@
 /* MyEvents Page Specific Styles */
 
+/* ===== HEADER + TOGGLE ===== */
+
+.my-events-header{
+    padding-top: 1rem;
+}
+
+.my-events-title{
+    margin-bottom: 1.25rem;
+}
+
+.my-events-toggle{
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0 0 1.25rem 0;
+    flex-wrap: wrap;
+}
+
+.my-events-toggle__tab{
+    text-decoration: none;
+    padding: 0.7rem 1.1rem;
+    border-radius: 0.85rem;
+    border: 2px solid #2FA84F;
+    font-weight: 800;
+    background: transparent;
+    color: #1a1a1a;
+    transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.my-events-toggle__tab:hover{
+    transform: translateY(-1px);
+}
+
+.my-events-toggle__tab.is-active{
+    background: #2FA84F;
+    color: #fff;
+}
+
+/* ===== PURCHASED META BLOCK ===== */
+
+.my-events-purchased-meta{
+    margin-top: 0.75rem;
+}
+
+.my-events-purchased-meta__title{
+    margin: 0 0 0.25rem 0;
+    font-weight: 800;
+}
+
+.my-events-purchased-meta__list{
+    margin: 0;
+    padding-left: 1.1rem;
+    color: #666;
+}
+
+.my-events-purchased-meta__item{
+    margin: 0.2rem 0;
+}
+
+.my-events-purchased-meta__summary{
+    margin: 0.5rem 0 0 0;
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.my-events-purchased-meta__strong{
+    font-weight: 800;
+}
+
+.my-events-purchased-meta__cta{
+    margin-top: 0.75rem;
+}
+
 /* ===== GRID STATE (WITH BOOKMARKED EVENTS) ===== */
 
 .my-events-grid {
@@ -219,5 +292,25 @@
         padding: 0.75rem 2rem;
         font-size: 0.95rem;
         width: 100%;
+    }
+}
+
+/* ===== RESPONSIVE TOGGLE + PURCHASED META (<=600px) ===== */
+
+@media (max-width: 600px){
+    .my-events-toggle{
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .my-events-toggle__tab{
+        padding: 0.65rem 0.95rem;
+        width: 100%;
+        text-align: center;
+        max-width: 420px;
+    }
+
+    .my-events-purchased-meta__list{
+        padding-left: 1rem;
     }
 }

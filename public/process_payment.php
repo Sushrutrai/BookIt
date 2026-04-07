@@ -1,9 +1,14 @@
 <?php
+session_start();
 require __DIR__ . '/../app/bootstrap.php';
 
 if (!isset($_SESSION['id'])) {
     header("Location:Form.php");
     exit();
+}
+
+if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin') {
+    die("Admins are not allowed to purchase tickets.");
 }
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -134,7 +139,7 @@ try {
         }
 
         for ($i = 0; $i < $qty; $i++) {
-            $hash = hash('sha256', $bookingId . '|' . $ticketTypeId . '|' . $userId . '|' . microtime(true) . '|' . random_bytes(8));
+            $hash = hash('sha256', $bookingId . '|' . $ticketTypeId . '|' . $userId . '|' . microtime(true) . '|' . bin2hex(random_bytes(8)));
             $ticketInstanceStmt->bind_param('iis', $bookingId, $ticketTypeId, $hash);
             $ticketInstanceStmt->execute();
             if ($ticketInstanceStmt->error) {
@@ -162,53 +167,37 @@ $eventName = (string)$event['event_name'];
 $eventDate = (string)$event['event_date'];
 $eventLocation = (string)$event['event_location'];
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ticket Confirmation</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 24px; color: #111; }
-        .wrap { max-width: 900px; margin: 0 auto; }
-        .card { border: 1px solid #ddd; border-radius: 12px; padding: 18px; margin: 16px 0; }
-        .row { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-        .muted { color: #666; }
-        table { width: 100%; border-collapse: collapse; margin-top: 12px; }
-        th, td { border-bottom: 1px solid #eee; padding: 10px 6px; text-align: left; }
-        .hash { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: 12px; word-break: break-all; }
-        .actions { display:flex; gap: 12px; margin-top: 16px; }
-        .btn { display:inline-block; padding: 10px 14px; border-radius: 10px; border: 1px solid #111; background: #111; color:#fff; text-decoration:none; cursor:pointer; }
-        .btn.secondary { background: #fff; color:#111; }
-        @media print {
-            .actions { display:none; }
-            body { padding: 0; }
-            .card { border: 1px solid #000; }
-        }
-    </style>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/confirmation_style.css">
 </head>
 <body>
-    <div class="wrap">
+    <?php include 'header.php'; ?>
+    <div class="conf-wrap">
         <h1>Ticket Confirmation</h1>
-        <p class="muted">Payment status: <strong>Success</strong></p>
+        <p class="conf-muted">Payment status: <strong style="color: #22C55E;">Success</strong></p>
 
-        <div class="card">
-            <div class="row">
+        <div class="conf-card">
+            <div class="conf-row">
                 <div>
-                    <h2 style="margin:0 0 8px 0;"><?php echo htmlspecialchars($eventName); ?></h2>
-                    <div class="muted">Date: <?php echo htmlspecialchars(date('D, d M, Y', strtotime($eventDate))); ?></div>
-                    <div class="muted">Location: <?php echo htmlspecialchars($eventLocation); ?></div>
+                    <h2><?php echo htmlspecialchars($eventName); ?></h2>
+                    <div class="conf-muted">Date: <?php echo htmlspecialchars(date('D, d M, Y', strtotime($eventDate))); ?></div>
+                    <div class="conf-muted">Location: <?php echo htmlspecialchars($eventLocation); ?></div>
                 </div>
                 <div>
-                    <div class="muted">Booked By</div>
+                    <div class="conf-muted">Booked By</div>
                     <div><strong><?php echo htmlspecialchars($userName); ?></strong></div>
-                    <div class="muted" style="margin-top:10px;">Booking Reference</div>
+                    <div class="conf-muted" style="margin-top:10px;">Booking Reference</div>
                     <div><strong><?php echo htmlspecialchars($bookingReference); ?></strong></div>
                 </div>
             </div>
 
-            <table>
+            <table class="conf-table">
                 <thead>
                     <tr>
                         <th>Ticket Type</th>
@@ -227,26 +216,26 @@ $eventLocation = (string)$event['event_location'];
                         </tr>
                     <?php endforeach; ?>
                     <tr>
-                        <td colspan="3" style="text-align:right;"><strong>Total Amount</strong></td>
+                        <td colspan="3"><strong>Total Amount</strong></td>
                         <td><strong>Rs.<?php echo htmlspecialchars(number_format((float)$totalAmount, 2)); ?></strong></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="card">
-            <h2 style="margin-top:0;">Issued Ticket IDs</h2>
-            <p class="muted">Each ticket has a unique Ticket ID. Print this page (or Save as PDF) as your ticket.</p>
+        <div class="conf-card">
+            <h2>Issued Ticket IDs</h2>
+            <p class="conf-muted">Each ticket has a unique Ticket ID. Print this page (or Save as PDF) as your ticket.</p>
             <?php foreach ($issuedTicketHashes as $hash): ?>
-                <div class="hash"><?php echo htmlspecialchars($hash); ?></div>
+                <div class="conf-hash"><?php echo htmlspecialchars($hash); ?></div>
             <?php endforeach; ?>
         </div>
 
-        <div class="actions">
-            <button class="btn" type="button" onclick="window.print()">Print / Save as PDF</button>
-            <a class="btn secondary" href="myEvents.php?view=purchased">Go to My Purchased</a>
+        <div class="conf-actions">
+            <button class="conf-btn" type="button" onclick="window.print()">Print / Save as PDF</button>
+            <a class="conf-btn conf-btn-secondary" href="myEvents.php?view=purchased">Go to My Purchased</a>
         </div>
     </div>
+    <?php include 'footer.php'; ?>
 </body>
 </html>
-

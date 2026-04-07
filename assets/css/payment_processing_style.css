@@ -1,0 +1,179 @@
+/* Enhanced Payment Processing Styles */
+
+:root {
+    --primary-color: #111111;
+    --secondary-color: #ffffff;
+    --accent-color: #3498db; /* Optional: for links/highlights */
+    --border-radius: 12px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+body{
+    color:black !important;
+    
+}
+
+.pp-wrap {
+    max-width: 800px; /* Slightly tighter for a "checkout" feel */
+    margin: 40px auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.pp-card {
+    background: #ffffff;
+    border: 1px solid #eef0f2;
+    border-radius: 20px; /* Softer corners */
+    padding: 32px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.04), 
+                0 8px 10px -6px rgba(0, 0, 0, 0.04);
+    box-sizing: border-box;
+}
+
+.pp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.pp-row h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+    color: var(--primary-color);
+}
+
+.pp-muted {
+    color: #6b7280;
+    font-size: 0.9rem;
+    margin-top: 4px;
+}
+
+/* Table Styling */
+.pp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+}
+
+.pp-table th {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    color: #9ca3af;
+    padding: 12px 8px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.pp-table td {
+    padding: 16px 8px;
+    border-bottom: 1px solid #f3f4f6;
+    color: #374151;
+    font-size: 0.95rem;
+}
+
+/* Total Row Highlight */
+.pp-table tbody tr:last-child td {
+    border-bottom: none;
+    padding-top: 24px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--primary-color);
+}
+
+/* Button & Actions */
+.pp-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.pp-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
+    padding: 14px 24px;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--primary-color);
+    background: var(--primary-color);
+    color: var(--secondary-color);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-sizing: border-box;
+}
+
+.pp-btn:hover {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.pp-btn:active {
+    transform: translateY(0);
+}
+
+.pp-btn.secondary {
+    background: transparent;
+    color: var(--primary-color);
+    border: 1px solid #e5e7eb;
+}
+
+.pp-btn.secondary:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.pp-btn-link {
+    text-decoration: none;
+}
+
+/* Mobile Responsive */
+@media (max-width: 640px) {
+    .pp-wrap {
+        margin: 16px auto;
+    }
+
+    .pp-card {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    .pp-row {
+        flex-direction: column;
+    }
+
+    .pp-actions {
+        flex-direction: column-reverse; /* Put primary button on top */
+        gap: 12px;
+    }
+
+    .pp-btn {
+        width: 100%;
+        padding: 16px;
+    }
+
+    /* Stack table for mobile if it's very narrow */
+    .pp-table th {
+        display: none; /* Hide headers on small mobile to save space */
+    }
+
+    .pp-table td {
+        display: block;
+        text-align: right;
+        padding: 8px 0;
+    }
+
+    .pp-table td::before {
+        content: attr(data-label); /* Requires data-label="Item" in your HTML <td> */
+        float: left;
+        font-weight: 600;
+        color: #9ca3af;
+    }
+}

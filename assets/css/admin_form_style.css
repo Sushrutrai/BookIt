@@ -1,0 +1,334 @@
+/* Admin form styling (Add/Edit Event) */
+
+:root{
+    --admin-bg: #f7f8fa;
+    --admin-card: #ffffff;
+    --admin-text: #111827;
+    --admin-muted: #6b7280;
+    --admin-border: rgba(0,0,0,0.12);
+    --admin-focus: #2FA84F;
+    --admin-danger: #e11d48;
+    --admin-shadow: 0 18px 40px rgba(0,0,0,0.06);
+}
+
+body{
+    margin: 0;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color: var(--admin-text);
+    background: radial-gradient(1200px 600px at 20% 0%, rgba(47,168,79,0.08), transparent 60%),
+                radial-gradient(1000px 500px at 100% 0%, rgba(59,130,246,0.08), transparent 55%),
+                var(--admin-bg);
+}
+
+.head {
+    /* max-width: 1000px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; */
+    width: 70%;
+      margin:1rem 0;
+}
+
+
+.head a{
+    text-decoration: none;
+    color: var(--admin-text);
+}
+
+.head p{
+    margin: 0 0 10px 0;
+    color: var(--admin-muted);
+    font-weight: 600;
+}
+
+.head h1{
+    margin: 0;
+    letter-spacing: -0.02em;
+}
+
+.head > p{
+    margin-top: 8px;
+}
+
+form{
+    max-width: 70%;
+    margin: 18px auto 40px auto;
+    padding: 0 16px;
+}
+
+.admin-card,
+form > div{
+    background: var(--admin-card);
+    border: 1px solid var(--admin-border);
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 16px;
+    box-shadow: var(--admin-shadow);
+}
+
+h2{
+    margin: 0 0 14px 0;
+    font-size: 18px;
+}
+
+label{
+    display: grid;
+    gap: 8px;
+    margin: 12px 0;
+    font-weight: 700;
+    color: var(--admin-text);
+}
+
+/* Desktop grid for form fields */
+.admin-form-grid{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 18px;
+    align-items: start;
+}
+
+.admin-form-grid label{
+    margin: 0;
+}
+
+.admin-span-2{
+    grid-column: 1 / -1;
+}
+
+input, select{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--admin-border);
+    background: #fff;
+    font-size: 14px;
+    outline: none;
+    max-width: 100%;
+}
+
+input:focus, select:focus{
+    border-color: var(--admin-focus);
+    box-shadow: 0 0 0 3px rgba(47,168,79,0.15);
+}
+
+input[type="file"]{
+    padding: 10px;
+}
+
+/* Alerts */
+.admin-alert{
+    max-width: 980px;
+    margin: 1rem auto;
+    padding: 1rem 16px;
+}
+
+.admin-alert--error{
+    border: 2px solid var(--admin-danger);
+    border-radius: 14px;
+    background: #fff5f7;
+    box-shadow: var(--admin-shadow);
+}
+
+.admin-alert__title{
+    margin: 0 0 0.75rem 0;
+    color: var(--admin-danger);
+    font-size: 16px;
+}
+
+.admin-alert__list{
+    margin: 0;
+    padding-left: 1.2rem;
+}
+
+.admin-alert__item{
+    margin: 0.25rem 0;
+}
+
+/* Ticket tier cards */
+.ticket-tiers-actions{
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 12px 0;
+}
+
+.ticket-tiers-grid{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    width: 100%;
+    max-width: 100%;
+}
+
+.ticket-tier-card{
+    border: 1px solid var(--admin-border);
+    border-radius: 14px;
+    padding: 14px;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.ticket-tier-card--new{
+    border-style: dashed;
+    border-color: rgba(0,0,0,0.22);
+}
+
+.ticket-tier-card__title{
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    letter-spacing: -0.01em;
+}
+
+.ticket-tier-card__header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.ticket-tier-card__header .ticket-tier-card__title{
+    margin: 0;
+}
+
+.ticket-tier-card__remove{
+    border: 1px solid rgba(0,0,0,0.18);
+    background: #fff;
+    color: #111827;
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-weight: 800;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.ticket-tier-card__remove:hover{
+    border-color: rgba(0,0,0,0.28);
+}
+
+.ticket-tier-card__fields{
+    display: grid;
+    gap: 10px;
+    width: 100%;
+}
+
+.ticket-tier-card__fields label{
+    margin: 0;
+}
+.ticket-tier-card__fields input,
+.ticket-tier-card__fields select {
+    width: 100%;
+    min-width: 0; 
+    display: block;
+}
+
+/* Make each tier card more compact on desktop by splitting fields */
+@media (min-width: 900px){
+    .ticket-tier-card__fields{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px 12px;
+    }
+
+    .ticket-tier-card__fields label:last-child{
+        grid-column: 1 / -1;
+    }
+    .head {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
+
+.buttons{
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-end;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+.btn{
+    border-radius: 12px;
+    padding: 10px 16px;
+    font-weight: 800;
+    border: 1px solid var(--admin-border);
+    cursor: pointer;
+}
+
+.btn.btn-primary{
+    background: var(--admin-focus);
+    border-color: var(--admin-focus);
+    color: #fff;
+}
+
+.btn.btn-secondary{
+    background: #fff;
+    color: var(--admin-text);
+}
+
+/* Responsive pass for <=600px */
+@media (max-width: 600px){
+       .head{
+        width:90%;
+        margin:1rem 0;
+    }
+    form{
+        min-width: 90%;
+    }
+
+    form > div,
+    .admin-card{
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .admin-form-grid{
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .admin-span-2{
+        grid-column: auto;
+    }
+
+    .ticket-tiers-grid{
+        grid-template-columns: 1fr;
+    }
+
+    .ticket-tiers-actions{
+        justify-content: stretch;
+    }
+
+    .ticket-tiers-actions .btn{
+        width: 100%;
+    }
+
+    .ticket-tier-card__fields{
+        grid-template-columns: 1fr;
+    }
+
+    .buttons{
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+    }
+
+    .btn{
+        width: 100%;box-sizing: border-box;
+    }
+}
+
+/* Tablet pass */
+/* @media (max-width: 980px){
+    .ticket-tiers-grid{
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+} */
+

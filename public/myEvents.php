@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bookmarked Events | BookIt</title>
+    <title>My Events | BookIt</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/grids.css">
     <link rel="stylesheet" href="../assets/css/myEvents.css">
 </head>
 <body>
-     <?php include "header.php"; ?>
+     <?php 
+     session_start();
+     include "header.php"; ?>
      <main>
     <?php
     require __DIR__.'/../app/bootstrap.php';
@@ -28,19 +30,20 @@
             $view = 'bookmarked';
         }
 
+        $bookmarkedActive = ($view === 'bookmarked') ? 'is-active' : '';
+        $purchasedActive = ($view === 'purchased') ? 'is-active' : '';
+
         // Toggle UI (GET param based, no stateful JS needed).
-        echo "<section class='centered main_content' style='padding-top: 1rem;'>
-                <div style='display:flex; justify-content:center; gap: 1rem; margin: 0 0 1.5rem 0;'>
-                    <a href='myEvents.php?view=bookmarked'
-                       style='text-decoration:none; padding: 0.7rem 1.25rem; border-radius: 0.75rem; border: 2px solid #2FA84F; font-weight: 700; background: ".($view === 'bookmarked' ? '#2FA84F' : 'transparent')."; color: ".($view === 'bookmarked' ? '#fff' : '#1a1a1a').";'>
+        echo "<section class='centered main_content my-events-header'>
+                <div class='my-events-toggle' role='tablist' aria-label='My events view'>
+                    <a class='my-events-toggle__tab ".$bookmarkedActive."' href='myEvents.php?view=bookmarked' role='tab' aria-selected='".($view === 'bookmarked' ? "true" : "false")."'>
                         Bookmarked
                     </a>
-                    <a href='myEvents.php?view=purchased'
-                       style='text-decoration:none; padding: 0.7rem 1.25rem; border-radius: 0.75rem; border: 2px solid #2FA84F; font-weight: 700; background: ".($view === 'purchased' ? '#2FA84F' : 'transparent')."; color: ".($view === 'purchased' ? '#fff' : '#1a1a1a').";'>
+                    <a class='my-events-toggle__tab ".$purchasedActive."' href='myEvents.php?view=purchased' role='tab' aria-selected='".($view === 'purchased' ? "true" : "false")."'>
                         Purchased
                     </a>
                 </div>
-                <h1 style='margin-bottom: 1.25rem;'>MY EVENTS</h1>
+                <h1 class='my-events-title'>MY EVENTS</h1>
             </section>";
 
         if ($view === 'bookmarked') {
@@ -84,6 +87,7 @@
             // Purchased view
             $purchasedQuery = $connection->prepare("
                 SELECT
+                    b.booking_id,
                     e.eid,
                     e.event_name,
                     e.event_date,
@@ -98,7 +102,7 @@
                 INNER JOIN ticket_type tt ON bi.ticket_type_id = tt.ticket_id
                 INNER JOIN event_details e ON tt.eid = e.eid
                 WHERE b.user_id = ? AND b.payment_status = 'completed'
-                ORDER BY e.event_date DESC
+                ORDER BY b.created_at DESC, e.event_date DESC
             ");
             $purchasedQuery->bind_param('i', $_SESSION['id']);
             $purchasedQuery->execute();
@@ -113,17 +117,19 @@
                         </div>
                     </section>";
             } else {
-                $eventsById = [];
+                // Group by booking (not just event) so multiple bookings for same event display correctly.
+                $bookingsById = [];
                 while ($row = $purchasedResult->fetch_assoc()) {
-                    $eid = (int)$row['eid'];
-                    if (!isset($eventsById[$eid])) {
-                        $eventsById[$eid] = [
-                            'eid' => $eid,
+                    $bookingId = (int)$row['booking_id'];
+                    if (!isset($bookingsById[$bookingId])) {
+                        $bookingsById[$bookingId] = [
+                            'booking_id' => $bookingId,
+                            'booking_reference' => $row['booking_reference'],
+                            'eid' => (int)$row['eid'],
                             'event_name' => $row['event_name'],
                             'event_date' => $row['event_date'],
                             'event_location' => $row['event_location'],
                             'event_image_path' => $row['event_image_path'],
-                            'booking_reference' => $row['booking_reference'],
                             'ticket_lines' => [],
                             'total_amount' => 0
                         ];
@@ -133,18 +139,18 @@
                     $priceAtPurchase = (float)$row['price_at_purchase'];
                     $subtotal = $qty * $priceAtPurchase;
 
-                    $eventsById[$eid]['ticket_lines'][] = [
+                    $bookingsById[$bookingId]['ticket_lines'][] = [
                         'ticket_name' => $row['ticket_name'],
                         'quantity' => $qty,
                         'subtotal' => $subtotal
                     ];
-                    $eventsById[$eid]['total_amount'] += $subtotal;
+                    $bookingsById[$bookingId]['total_amount'] += $subtotal;
                 }
 
                 echo "<section class='centered main_content'>
                         <div class='grid my-events-grid'>";
 
-                foreach ($eventsById as $event) {
+                foreach ($bookingsById as $event) {
                     echo "<article class='grid-item '>
                         <div class='banner_img_container'>
                             <img class='banner_img' src='../uploads/".htmlspecialchars($event['event_image_path'])."' alt='".htmlspecialchars($event['event_name'])."'>
@@ -154,12 +160,12 @@
                             <li><img class='icon' src='../assets/icons/calender.svg' alt='Date'><span>".date('d M ,Y', strtotime($event['event_date']))."</span></li>
                             <li><img class='icon' src='../assets/icons/time.svg' alt='Location'><span>".htmlspecialchars($event['event_location'])."</span></li>
                         </ul>
-                        <div style='margin-top: 0.75rem;'>
-                            <p style='margin: 0 0 0.25rem 0; font-weight: 700;'>Tickets</p>
-                            <ul style='margin: 0; padding-left: 1.2rem; color:#666;'>";
+                        <div class='my-events-purchased-meta'>
+                            <p class='my-events-purchased-meta__title'>Tickets</p>
+                            <ul class='my-events-purchased-meta__list'>";
 
                     foreach ($event['ticket_lines'] as $line) {
-                        echo "<li style='margin:0.2rem 0;'>
+                        echo "<li class='my-events-purchased-meta__item'>
                                 ".htmlspecialchars($line['ticket_name']).": ".htmlspecialchars((string)$line['quantity'])."
                              </li>";
                     }
@@ -168,10 +174,13 @@
                     $total = number_format((float)$event['total_amount'], 2);
 
                     echo "        </ul>
-                        <p style='margin: 0.5rem 0 0 0; color:#666; font-size: 0.95rem;'>
-                            Booking: <span style='font-weight:700;'>".$bookingRef."</span> | Total: Rs.".$total."
+                        <p class='my-events-purchased-meta__summary'>
+                            Booking: <span class='my-events-purchased-meta__strong'>".$bookingRef."</span> | Total: Rs.".$total."
                         </p>
-                        <button class='buy_button' type='button' onclick=\"location.href='event_card.php?eid=".$event['eid']."'\" style='margin-top: 0.75rem;'>View Event</button>
+                       <form method='post'>
+                         <button class='buy_button my-events-purchased-meta__cta' type='button' onclick=\"location.href='event_card.php?eid=".$event['eid']."'\">View Event</button>
+                        <button class='buy_button my-events-purchased-meta__cta' type='button' onclick=\"location.href='view_tickets.php?bid=".$event['booking_id']."'\">View Tickets</button>
+                       </form>
                     </div>
                 </article>";
                 }
