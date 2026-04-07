@@ -1,4 +1,223 @@
-.grid::after{
-    content: '';
-    width: auto;
+/* MyEvents Page Specific Styles */
+
+/* ===== GRID STATE (WITH BOOKMARKED EVENTS) ===== */
+
+.my-events-grid {
+    animation: fadeIn 0.4s ease-in;
+}
+
+.event-title {
+    cursor: pointer;
+    transition: color 0.3s ease;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.event-title:hover {
+    color: #2FA84F;
+}
+
+.event-info {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* ===== EMPTY STATE (NO BOOKMARKED EVENTS) ===== */
+
+.my-events-empty {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem 3rem;
+    border-radius: 1.5rem;
+    background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+    color: #333;
+    max-width: 600px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 2px solid #f0f0f0;
+}
+
+.empty-state h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0 0 1.2rem 0;
+    color: #1a1a1a;
+    letter-spacing: -0.5px;
+}
+
+.empty-state p {
+    font-size: 1.05rem;
+    margin: 0 0 2.5rem 0;
+    color: #555;
+    line-height: 1.8;
+    font-weight: 500;
+}
+
+/* Empty state with login prompt styling */
+.empty-state.login-prompt {
+    background: linear-gradient(135deg, #e8f4f8 0%, #f0f8f0 100%);
+    border: 2px dashed #2FA84F;
+    border-radius: 1.2rem;
+}
+
+.empty-state.login-prompt h2 {
+    color: #1a5f3d;
+    font-size: 2rem;
+}
+
+.empty-state.login-prompt p {
+    color: #2c5f46;
+}
+
+/* Empty state icon/decoration */
+.empty-state::before {
+    content: url("../icons/utility/bookmarks.svg");
+    display: block;
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+    animation: float 3s ease-in-out infinite;
+}
+
+.empty-state.login-prompt::before {
+    content: url("../icons/utility/lock.svg");
+    font-size: 4.5rem;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== CTA BUTTON ===== */
+
+.cta-button {
+    display: inline-block;
+    padding: 1rem 3rem;
+    background: linear-gradient(135deg, #2FA84F 0%, #24844a 100%);
+    color: white;
+    border-radius: 0.75rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid #2FA84F;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(47, 168, 79, 0.2);
+    letter-spacing: 0.5px;
+    max-width: 80%;
+}
+
+.cta-button:hover {
+    background: linear-gradient(135deg, #24844a 0%, #1a5f3d 100%);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(47, 168, 79, 0.35);
+}
+
+.cta-button:active {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(47, 168, 79, 0.25);
+}
+
+/* ===== SECTION HEADERS ===== */
+
+.main_content h1 {
+    animation: slideDown 0.5s ease-out;
+    color: #1a1a1a;
+    border-bottom: 3px solid #2FA84F;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== RESPONSIVE EMPTY STATE ===== */
+
+@media (max-width: 768px) {
+    .my-events-empty {
+        min-height: 70vh;
+        padding: 1rem;
+    }
+    
+    .empty-state {
+        padding: 3rem 2rem;
+        border-radius: 1rem;
+    }
+    
+    .empty-state h2 {
+        font-size: 1.8rem;
+    }
+    
+    .empty-state p {
+        font-size: 1rem;
+        margin-bottom: 2rem;
+    }
+    
+    .empty-state::before {
+        font-size: 4rem;
+    }
+    
+    .cta-button {
+        padding: 0.85rem 2.5rem;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .my-events-empty {
+        min-height: 80vh;
+    }
+    
+    .empty-state {
+        padding: 2.5rem 1.5rem;
+    }
+    
+    .empty-state h2 {
+        font-size: 1.5rem;
+    }
+    
+    .empty-state p {
+        font-size: 0.95rem;
+    }
+    
+    .empty-state::before {
+        font-size: 3.5rem;
+        margin-bottom: 0.8rem;
+    }
+    
+    .cta-button {
+        padding: 0.75rem 2rem;
+        font-size: 0.95rem;
+        width: 100%;
+    }
 }

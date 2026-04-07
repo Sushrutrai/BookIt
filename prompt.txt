@@ -1,0 +1,14 @@
+Take a look at my code base I am trying to add a couple of features and refactor some modules 
+-In myevents.php page i want there to be toggle option so users who have logged in can view 
+    the bookmarked events or on toggle view purchased ticket 
+-In the admin section I want you to edit the addevent form so that it can accept ticket data too 
+    and want u to validate the form fields before storing data to the database.
+-In the admin/ViewEventList.php add functionality to edit the form 
+-In the event_card.php I want u to present the ticket information and add functionality to purchase the ticket
+-I want u to create a dummy payment processing where a pdf is generated on ticket purchase 
+
+
+The database schema is included in the schema.sql fields
+
+I don't want u to tamper with existing css on the index and event_card pages 
+I give u access to make changes where you see fit.
