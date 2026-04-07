@@ -15,6 +15,17 @@
                 $result=$query->get_result();
                 $row=$result->fetch_assoc();
                 }
+            // Load ticket tiers for this event
+            $tickets = [];
+            if (!empty($row) && isset($row['eid'])) {
+                $ticketQuery = $connection->prepare("SELECT * FROM ticket_type WHERE eid=? ORDER BY ticket_id ASC");
+                $ticketQuery->bind_param('i', $row['eid']);
+                $ticketQuery->execute();
+                $ticketResult = $ticketQuery->get_result();
+                while ($t = $ticketResult->fetch_assoc()) {
+                    $tickets[] = $t;
+                }
+            }
     echo"
         <style>
             .cover{
@@ -82,28 +93,39 @@
                     <p class="description"><?php echo $row['event_description'];?></p>
                     <div class="buy_ticket_container">
                         <h2>Select Tickets</h2>
-                    <div class='ticket_type'>
-                        <div class="ticket_price">
-                            <p>Vip TIcket</p>
-                            <p>Rs.1999</p>
-                        </div>
-                            <button class="ticket_button">ADD</button>
-                        </div>
-                    <div class='ticket_type'>
-                            <div class="ticket_price">
-                            <p>Vip TIcket</p>
-                            <p>Rs.1999</p>
-                        </div>
-                            <button class="ticket_button">ADD</button>
-                        </div>
-                    <div class='ticket_type'>
-                          <div class="ticket_price">
-                        <p>Vip TIcket</p>
-                        <p>Rs.1999</p>
-                       </div>
-                        <button class="ticket_button">ADD</button>
-                    </div>
-                    <button class="buy_button">Buy Ticket</button>
+                        <form method="post" action="process_payment.php">
+                            <input type="hidden" name="eid" value="<?php echo (int)$row['eid']; ?>">
+                            <?php if (empty($tickets)): ?>
+                                <p style="margin: 0.5rem 0; color:#666;">No ticket tiers available for this event yet.</p>
+                            <?php else: ?>
+                                <?php foreach ($tickets as $t):
+                                    $remaining = (int)$t['capacity'] - (int)($t['sold_count'] ?? 0);
+                                    if ($remaining < 0) $remaining = 0;
+                                    $isAvailable = ((string)$t['status'] === 'available') && $remaining > 0;
+                                ?>
+                                    <div class='ticket_type'>
+                                        <div class="ticket_price">
+                                            <p><?php echo htmlspecialchars($t['ticket_name']); ?></p>
+                                            <p>Rs.<?php echo htmlspecialchars(number_format((float)$t['price'], 2)); ?></p>
+                                        </div>
+                                        <div style="display:flex; align-items:center; gap: 0.5rem;">
+                                            <input type="number"
+                                                name="quantity[<?php echo (int)$t['ticket_id']; ?>]"
+                                                min="0"
+                                                max="<?php echo (int)$remaining; ?>"
+                                                value="0"
+                                                style="width: 90px; padding: 0.4rem; border: 1px solid rgba(0,0,0,0.2); border-radius: 0.5rem;"
+                                                <?php echo $isAvailable ? '' : 'disabled'; ?>
+                                            >
+                                            <span style="color:#666; font-size: 0.9rem;">
+                                                <?php echo $isAvailable ? ($remaining . " left") : "Unavailable"; ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <button class="buy_button" type="submit">Purchase Ticket</button>
+                            <?php endif; ?>
+                        </form>
                 </div>
             </div>
         </div>
