@@ -6,15 +6,45 @@
     <title>Document</title>
     <link rel="stylesheet" href="../assets/css/event_page_style.css">
     <?php
+            session_start();
             require __DIR__.'/../app/bootstrap.php';
-            if(isset($_GET['eid'])){
-                $eid=$_GET['eid'];
+            $row = null;
+            $eid = isset($_GET['eid']) ? (int)$_GET['eid'] : 0;
+            if ($eid > 0) {
                 $query=$connection->prepare('select * from event_details where eid=?');
                 $query->bind_param('i',$eid);
                 $query->execute();
                 $result=$query->get_result();
                 $row=$result->fetch_assoc();
+            }
+
+            // If missing/invalid eid or event not found, render a safe fallback and stop.
+            if (empty($row) || !isset($row['eid'])) {
+                echo "</head><body>";
+                include 'header.php';
+                echo "<main class='centered' style='padding: 2rem;'>
+                        <section style='max-width: 720px; margin: 0 auto; text-align:center; padding: 2rem; border: 1px solid rgba(0,0,0,0.12); border-radius: 1rem; background: #fff;'>
+                            <h2 style='margin:0 0 0.75rem 0;'>Event not found</h2>
+                            <p style='margin:0 0 1.25rem 0; color:#666;'>The event you’re looking for doesn’t exist or the link is invalid.</p>
+                            <a href='index.php' style='display:inline-block; padding: 0.85rem 1.25rem; border-radius: 0.75rem; background:#2FA84F; color:#fff; text-decoration:none; font-weight:800;'>Back to Explore</a>
+                        </section>
+                      </main>";
+                include 'footer.php';
+                echo "</body></html>";
+                exit();
+            }
+
+            // Load ticket tiers for this event
+            $tickets = [];
+            if (!empty($row) && isset($row['eid'])) {
+                $ticketQuery = $connection->prepare("SELECT * FROM ticket_type WHERE eid=? ORDER BY ticket_id ASC");
+                $ticketQuery->bind_param('i', $row['eid']);
+                $ticketQuery->execute();
+                $ticketResult = $ticketQuery->get_result();
+                while ($t = $ticketResult->fetch_assoc()) {
+                    $tickets[] = $t;
                 }
+            }
     echo"
         <style>
             .cover{
@@ -43,12 +73,15 @@
                             $activeClass = '';
                             $isDisabled = false;
                             $disableReason = '';
+                            $isAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+                            $purchaseDisabled = $isAdmin ? 'disabled' : '';
+                            $purchaseTitle = $isAdmin ? 'Admins cannot buy tickets' : '';
                             
                             // Only show bookmark button for logged-in regular users
                             if (!isset($_SESSION['role'])) {
                                 $isDisabled = true;
                                 $disableReason = 'Please log in to bookmark events';
-                            } elseif ($_SESSION['role'] === 'admin') {
+                            } elseif ($isAdmin) {
                                 $isDisabled = true;
                                 $disableReason = 'Admins cannot bookmark events';
                             } elseif (isset($_SESSION['id'])) {
@@ -82,28 +115,44 @@
                     <p class="description"><?php echo $row['event_description'];?></p>
                     <div class="buy_ticket_container">
                         <h2>Select Tickets</h2>
-                    <div class='ticket_type'>
-                        <div class="ticket_price">
-                            <p>Vip TIcket</p>
-                            <p>Rs.1999</p>
-                        </div>
-                            <button class="ticket_button">ADD</button>
-                        </div>
-                    <div class='ticket_type'>
-                            <div class="ticket_price">
-                            <p>Vip TIcket</p>
-                            <p>Rs.1999</p>
-                        </div>
-                            <button class="ticket_button">ADD</button>
-                        </div>
-                    <div class='ticket_type'>
-                          <div class="ticket_price">
-                        <p>Vip TIcket</p>
-                        <p>Rs.1999</p>
-                       </div>
-                        <button class="ticket_button">ADD</button>
-                    </div>
-                    <button class="buy_button">Buy Ticket</button>
+                        <form method="post" action="payment_processing.php">
+                            <input type="hidden" name="eid" value="<?php echo (int)$row['eid']; ?>">
+                            <?php if (empty($tickets)): ?>
+                                <p style="margin: 0.5rem 0; color:#666;">No ticket tiers available for this event yet.</p>
+                            <?php else: ?>
+                                <?php if ($isAdmin): ?>
+                                    <div style="margin-bottom:1rem; padding:1rem; border:1px solid #e3e8f0; border-radius:0.75rem; background:#f8fafc; color:#1f2937;">
+                                        Admin view only: ticket purchase is disabled for admin users.
+                                    </div>
+                                <?php endif; ?>
+                                <?php foreach ($tickets as $t):
+                                    $remaining = (int)$t['capacity'] - (int)($t['sold_count'] ?? 0);
+                                    if ($remaining < 0) $remaining = 0;
+                                    $isAvailable = ((string)$t['status'] === 'available') && $remaining > 0;
+                                ?>
+                                    <div class='ticket_type'>
+                                        <div class="ticket_price">
+                                            <p><?php echo htmlspecialchars($t['ticket_name']); ?></p>
+                                            <p>Rs.<?php echo htmlspecialchars(number_format((float)$t['price'], 2)); ?></p>
+                                        </div>
+                                        <div style="display:flex; align-items:center; gap: 0.5rem;">
+                                            <input type="number"
+                                                name="quantity[<?php echo (int)$t['ticket_id']; ?>]"
+                                                min="0"
+                                                max="<?php echo (int)$remaining; ?>"
+                                                value="0"
+                                                style="width: 90px; padding: 0.4rem; border: 1px solid rgba(0,0,0,0.2); border-radius: 0.5rem;"
+                                                <?php echo !$isAvailable || $isAdmin ? 'disabled' : ''; ?>
+                                            >
+                                            <span style="color:#666; font-size: 0.9rem;">
+                                                <?php echo $isAvailable ? ($remaining . " left") : "Unavailable"; ?>
+                                            </span>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                                <button class="buy_button" type="submit" <?php echo $isAdmin ? 'disabled title="Admins cannot buy tickets"' : ''; ?>>Buy</button>
+                            <?php endif; ?>
+                        </form>
                 </div>
             </div>
         </div>

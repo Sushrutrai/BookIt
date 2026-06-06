@@ -86,7 +86,7 @@ main p{
     min-width: 300px;
     align-items: center;
     justify-content: center;
-    display: flex;
+    /* display: flex; */
     margin: 1.5rem 0;
     padding: 3rem;
     /* aspect-ratio: 2/1; */

@@ -13,7 +13,9 @@
 </head>
 
 <body>
-    <?php include "header.php"; ?> 
+    <?php 
+    session_start();
+    include "header.php"; ?> 
     <main>
         <section class="hero" id="hero">
             <div class="overlay" id="left"></div>
@@ -58,15 +60,19 @@
                         
                         $disabledAttr = $isDisabled ? 'disabled' : '';
                         $titleAttr = $isDisabled ? 'title="' . $disableReason . '"' : '';
+                        $buyAsAdmin = isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+                        $buyDisabled = $buyAsAdmin ? 'disabled' : '';
+                        $buyTitle = $buyAsAdmin ? 'title="Admins cannot buy tickets"' : '';
+                        $buyOnclick = $buyAsAdmin ? '' : "onclick=\"location.href='event_card.php?eid=".$row['eid']."'\"";
 
-                        echo "<article class='grid-item ' >
-                            <div class='banner_img_container banner_img'>
-                            <img  src='../uploads/".$row["event_image_path"]."' alt='".htmlspecialchars($row["event_name"])."'> 
-                            <button class='favourite ".$activeClass."' ".$disabledAttr." ".$titleAttr.">
-                            <svg  width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
-                            <path d='M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z' stroke='black' stroke-width='1'/>
-                        </svg>
-                        </button>
+                        echo "<article class='grid-item' >
+                            <div class='banner_img_container'>
+                                <img src='../uploads/".$row["event_image_path"]."' alt='".htmlspecialchars($row["event_name"])."'> 
+                                <button type='button' class='favourite ".$activeClass."' data-eid='".$row['eid']."' ".$disabledAttr." ".$titleAttr.">
+                                    <svg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+                                        <path d='M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.41 4.42 3 7.5 3C9.24 3 10.91 3.81 12 5.08C13.09 3.81 14.76 3 16.5 3C19.58 3 22 5.41 22 8.5C22 12.27 18.6 15.36 13.45 20.03L12 21.35Z' stroke='black' stroke-width='1' fill='none'/>
+                                    </svg>
+                                </button>
                             </div>
                             <h3 onclick=\"location.href='event_card.php?eid=".$row['eid']."'\">".htmlspecialchars($row['event_name'])."</h3>             
                             
@@ -74,7 +80,7 @@
                         <li><img class='icon' src='../assets/icons/calender.svg' > ".date('d M ,Y', strtotime($row['event_date'])) ."</li>
                         <li><img class='icon' src='../assets/icons/time.svg' >".htmlspecialchars($row["event_location"])."</li>
                     </ul>
-                    <button class='buy_button'type='button' onclick=\"return alert('ticket purchased')\">Buy Ticket</button>
+                    <button class='buy_button' type='button' ".$buyOnclick." ".$buyDisabled." ".$buyTitle.">Buy Ticket</button>
       
                 </article>
                         ";
@@ -97,7 +103,7 @@
 
             const isActive = this.classList.toggle('is_active');
             const userID = <?php echo isset($_SESSION['id']) ? $_SESSION['id'] : 0; ?>;
-            const eid = this.closest('article').querySelector('h3').getAttribute('onclick').match(/eid=(\d+)/)[1];
+            const eid = this.dataset.eid;
 
             try {
                 const response = await fetch('../app/actions/bookmarks.php', {

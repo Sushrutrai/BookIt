@@ -18,7 +18,7 @@
             <nav>
                 <ul class="navigation">
                     <?php
-                    session_start();  
+                    // session_start();  
                     
                     // $_SESSION['role']='admin';          //This is just temporary for testing admin functionality
                     // $_SESSION['name']='admin';          //This is just temporary for testing admin functionality
@@ -28,7 +28,7 @@
                     }
                     ?>
                     <!-- <li><a href="about_us.php">About us</a></li> -->
-                    <li><a href="">Explore</a></li>
+                    <li><a href="index.php">Explore</a></li>
                     <li><a href="myEvents.php">My Events</a></li>
                     <?php
 
