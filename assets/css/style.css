@@ -17,6 +17,7 @@ header {
 footer {
   background-color: black;
   width: 100%;
+  
 }
 a {
   color: rgb(0, 0, 0);
@@ -35,7 +36,6 @@ footer a {
 .header {
   display: flex;
   justify-content: space-between;
-  /* <!-- padding: min(1.8rem, 5%); --> */
      width:100%;
     align-items: center;
 }
